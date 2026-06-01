@@ -21,7 +21,7 @@ def _copy_to_clipboard(text: str) -> None:
     user32.CloseClipboard()
 
 
-# ── Windows SendInput ──────────────────────────────────────────────────────────
+# ── Windows SendInput (Ctrl+V) ─────────────────────────────────────────────────
 
 _INPUT_KEYBOARD = 1
 _KEYEVENTF_KEYUP = 0x0002
@@ -60,18 +60,14 @@ def _send_ctrl_v() -> None:
 # ── Public class ───────────────────────────────────────────────────────────────
 
 class TextTyper:
-    def type_text(self, text: str) -> None:
+    def type_text(self, text: str, target_hwnd: int = 0) -> None:
         if text:
             threading.Thread(target=self._paste, args=(text,), daemon=True).start()
 
     def _paste(self, text: str) -> None:
-        # Wait for hotkey keys to fully release before injecting
-        time.sleep(0.2)
-
         try:
             _copy_to_clipboard(text)
         except Exception:
-            # Last-resort fallback via pyperclip
             try:
                 pyperclip.copy(text)
             except Exception:

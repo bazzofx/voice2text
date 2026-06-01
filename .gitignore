@@ -35,6 +35,11 @@ models/
 # DLL files (platform-specific, should not be committed)
 *.dll
 
+# PyInstaller build artifacts
+build/
+packages/
+*.spec
+
 # IDE / editor
 .vscode/
 .idea/
