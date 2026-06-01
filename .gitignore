@@ -39,6 +39,7 @@ models/
 build/
 packages/
 *.spec
+*.zip
 
 # IDE / editor
 .vscode/
